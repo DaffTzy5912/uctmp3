@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TikTok MP3 Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            width: 300px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>TikTok MP3 Downloader</h1>
+    <input type="text" id="url" placeholder="Paste TikTok URL here">
+    <br>
+    <button onclick="downloadMP3()">Download MP3</button>
+    <br><br>
+    <audio id="audio" controls style="display:none; margin-top:20px;"></audio>
+
+    <script>
+        async function downloadMP3() {
+            const url = document.getElementById('url').value;
+            if (!url) {
+                alert('Please enter a TikTok URL!');
+                return;
+            }
+            const response = await fetch('/api/tiktokmp3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url })
+            });
+            const data = await response.json();
+            if (data.success) {
+                const audio = document.getElementById('audio');
+                audio.src = data.audioUrl;
+                audio.style.display = 'block';
+                audio.load();
+                audio.play();
+            } else {
+                alert('Failed to download MP3: ' + data.message);
+            }
+        }
+    </script>
+
+</body>
+</html>
