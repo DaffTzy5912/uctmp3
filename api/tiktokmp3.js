@@ -16,8 +16,8 @@ export default async function handler(req, res) {
             success: true,
             audioUrl: result.result.music
         });
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error(error);
         return res.status(500).json({ success: false, message: 'Failed to fetch TikTok MP3.' });
     }
 }
