@@ -1,5 +1,3 @@
-import { tiktok } from 'api-dylux';
-
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, message: 'Only POST method is allowed.' });
@@ -11,10 +9,17 @@ export default async function handler(req, res) {
     }
 
     try {
-        const result = await tiktok(url);
+        const apiUrl = `https://api.akuari.my.id/downloader/tiktok2?link=${encodeURIComponent(url)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (!data || !data.respon || !data.respon.music) {
+            throw new Error('Invalid response from API.');
+        }
+
         return res.status(200).json({
             success: true,
-            audioUrl: result.result.music
+            audioUrl: data.respon.music
         });
     } catch (error) {
         console.error(error);
