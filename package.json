@@ -1,0 +1,12 @@
+{
+  "name": "tiktok-mp3-downloader",
+  "version": "1.0.0",
+  "description": "Download TikTok MP3 via web",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "api-dylux": "^1.0.0"
+  }
+}
